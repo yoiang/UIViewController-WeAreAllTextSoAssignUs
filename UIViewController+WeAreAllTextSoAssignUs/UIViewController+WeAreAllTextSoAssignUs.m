@@ -74,6 +74,33 @@
 {
     [self setText:text toViews:@[label, button, textField, textView] ];
 }
+
++ (void)setHidden:(BOOL)hidden toView:(UIView *)view
+{
+    [view setHidden:hidden];
+}
+
+- (void)setHidden:(BOOL)hidden toViews:(NSArray *)views
+{
+    [views enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [UIViewController setHidden:hidden toView:obj];
+    } ];
+}
+
+- (void)setHidden:(BOOL)hidden toViewsWithKey:(NSString *)key
+{
+    [self callOnViews:^(NSArray *views) {
+        [self setHidden:hidden toViews:views];
+    } forKey:key];
+}
+
+- (void)setHidden:(BOOL)hidden
+          toLabel:(UILabel *)label
+        andButton:(UIButton *)button
+     andTextField:(UITextField *)textField
+      andTextView:(UITextView *)textView
+{
+    [self setHidden:hidden toViews:@[label, button, textField, textView] ];
 }
 
 @end

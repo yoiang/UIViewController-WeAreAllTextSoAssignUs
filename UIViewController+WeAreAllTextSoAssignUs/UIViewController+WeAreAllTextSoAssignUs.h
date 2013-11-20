@@ -20,4 +20,12 @@
    andTextField:(UITextField *)textField
     andTextView:(UITextView *)textView;
 
+- (void)setHidden:(BOOL)hidden toViews:(NSArray *)views;
+- (void)setHidden:(BOOL)hidden toViewsWithKey:(NSString *)key;
+- (void)setHidden:(BOOL)hidden
+          toLabel:(UILabel *)label
+        andButton:(UIButton *)button
+     andTextField:(UITextField *)textField
+      andTextView:(UITextView *)textView;
+
 @end
