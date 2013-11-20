@@ -11,6 +11,11 @@
 @interface UIViewController (WeAreAllTextSoAssignUs)
 
 - (void)mapViews:(NSArray *)views forKey:(NSString *)key;
+- (void)mapLabel:(UILabel *)label
+       andButton:(UIButton *)button
+    andTextField:(UITextField *)textField
+     andTextView:(UITextView *)textView
+          forKey:(NSString *)key;
 
 - (void)setText:(NSString *)text toViews:(NSArray *)views;
 - (void)setText:(NSString *)text toViewsWithKey:(NSString *)key;

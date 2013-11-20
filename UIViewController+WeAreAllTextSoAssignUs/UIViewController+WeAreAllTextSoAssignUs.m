@@ -18,11 +18,50 @@ NSString *const WeAreAllTextSoAssignUsViewGroupsKey = @"WeAreAllTextSoAssignUsVi
 
 @end
 
+@implementation NSMutableArray (WeAreAllTextSoAssignUs)
+
+- (void)addObjectNilSafe:(id)object
+{
+    if (object)
+    {
+        [self addObject:object];
+    }
+}
+
+@end
+
+@implementation NSArray (WeAreAllTextSoAssignUs)
+
++ (NSArray *)arrayOfLabel:(UILabel *)label
+                andButton:(UIButton *)button
+             andTextField:(UITextField *)textField
+              andTextView:(UITextView *)textView
+{
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObjectNilSafe:label];
+    [array addObjectNilSafe:button];
+    [array addObjectNilSafe:textField];
+    [array addObjectNilSafe:textView];
+    return array;
+}
+
+@end
+
 @implementation UIViewController (WeAreAllTextSoAssignUs)
 
 - (void)mapViews:(NSArray *)views forKey:(NSString *)key
 {
     [self.viewGroups setObject:views forKey:key];
+}
+
+- (void)mapLabel:(UILabel *)label
+       andButton:(UIButton *)button
+    andTextField:(UITextField *)textField
+     andTextView:(UITextView *)textView
+          forKey:(NSString *)key
+{
+    [self mapViews:[NSArray arrayOfLabel:label andButton:button andTextField:textField andTextView:textView]
+            forKey:key];
 }
 
 - (void)callOnViews:(void (^)(NSArray *views) )callBlock forKey:(NSString *)key
@@ -93,7 +132,8 @@ NSString *const WeAreAllTextSoAssignUsViewGroupsKey = @"WeAreAllTextSoAssignUsVi
    andTextField:(UITextField *)textField
     andTextView:(UITextView *)textView
 {
-    [self setText:text toViews:@[label, button, textField, textView] ];
+    [self setText:text
+          toViews:[NSArray arrayOfLabel:label andButton:button andTextField:textField andTextView:textView] ];
 }
 
 + (void)setHidden:(BOOL)hidden toView:(UIView *)view
@@ -121,7 +161,8 @@ NSString *const WeAreAllTextSoAssignUsViewGroupsKey = @"WeAreAllTextSoAssignUsVi
      andTextField:(UITextField *)textField
       andTextView:(UITextView *)textView
 {
-    [self setHidden:hidden toViews:@[label, button, textField, textView] ];
+    [self setHidden:hidden
+            toViews:[NSArray arrayOfLabel:label andButton:button andTextField:textField andTextView:textView] ];
 }
 
 @end
