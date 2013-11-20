@@ -8,6 +8,10 @@
 
 #import "UIViewController+WeAreAllTextSoAssignUs.h"
 
+#import <objc/runtime.h>
+
+NSString *const WeAreAllTextSoAssignUsViewGroupsKey = @"WeAreAllTextSoAssignUsViewGroups";
+
 @interface UIViewController (WeAreAllTextSoAssignUsPrivate)
 
 @property (strong, readwrite) NSMutableDictionary *viewGroups;
@@ -30,6 +34,23 @@
         callBlock( views );
     }
 }
+
+- (void)setViewGroups:(NSMutableDictionary *)viewGroups
+{
+	objc_setAssociatedObject(self, CFBridgingRetain(WeAreAllTextSoAssignUsViewGroupsKey), viewGroups, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSMutableDictionary *)viewGroups
+{
+	NSMutableDictionary *result = (NSMutableDictionary *)objc_getAssociatedObject(self, CFBridgingRetain(WeAreAllTextSoAssignUsViewGroupsKey) );
+    if (!result)
+    {
+        result = [NSMutableDictionary dictionary];
+        self.viewGroups = result;
+    }
+    return result;
+}
+
 
 + (void)setText:(NSString *)text toView:(UIView *)view
 {
